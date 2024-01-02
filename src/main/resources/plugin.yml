@@ -1,0 +1,5 @@
+name: OctaneEngine
+version: '${project.version}'
+main: com.octanepvp.splityosis.octaneengine.OctaneEngine
+api-version: 1.19
+load: STARTUP
