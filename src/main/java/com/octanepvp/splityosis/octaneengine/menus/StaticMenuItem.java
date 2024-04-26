@@ -55,6 +55,7 @@ public class StaticMenuItem {
             }
         }.executes((inventoryClickEvent, menu) -> {
             if (getOnClick() == null) return;
+            // THIS IS NOT AN ARRAY
             getOnClick().perform(player, placeholders);
         });
     }
