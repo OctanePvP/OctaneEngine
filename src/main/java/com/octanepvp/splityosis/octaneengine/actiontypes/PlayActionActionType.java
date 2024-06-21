@@ -16,7 +16,7 @@ public class PlayActionActionType extends ActionType {
     private OctaneEngine plugin;
 
     public PlayActionActionType(OctaneEngine plugin) {
-        super("PlayAction", "PlayActions", "Actions", "Action", "preset", "presets", "play_action", "play_actions");
+        super("PlayAction", "PlayActions", "Actions", "Action", "preset", "presets", "play_action", "play_actions", "action", "actions", "ACTION", "ACTIONS", "PLAY_ACTION", "PLAY_ACTIONS");
         this.plugin = plugin;
     }
 
