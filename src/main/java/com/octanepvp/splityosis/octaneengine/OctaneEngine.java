@@ -5,6 +5,8 @@ import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionAllActionType
 import com.octanepvp.splityosis.octaneengine.commands.OctaneEngineCommandBranch;
 import com.octanepvp.splityosis.octaneengine.files.ActionsBankConfig;
 import com.octanepvp.splityosis.octaneengine.files.logics.ActionsMapLogic;
+import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMap;
+import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.function.logics.FunctionConfigLogic;
 import com.octanepvp.splityosis.octaneengine.menus.logics.MenuStaticItemsMapLogic;
 import dev.splityosis.configsystem.configsystem.ConfigSystem;
@@ -31,6 +33,7 @@ public final class OctaneEngine extends JavaPlugin {
         // Logics
         new MenuStaticItemsMapLogic().register();
         new ActionsMapLogic().register();
+        new IntegerActionsMapLogic().register();
         new FunctionConfigLogic().register();
 
         // ActionTypes
