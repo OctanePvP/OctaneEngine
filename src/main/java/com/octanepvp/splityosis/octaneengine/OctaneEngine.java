@@ -1,5 +1,6 @@
 package com.octanepvp.splityosis.octaneengine;
 
+import com.octanepvp.splityosis.octaneengine.actiontypes.MessageIteratorActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionAllActionType;
 import com.octanepvp.splityosis.octaneengine.commands.OctaneEngineCommandBranch;
@@ -39,6 +40,7 @@ public final class OctaneEngine extends JavaPlugin {
         // ActionTypes
         new PlayActionActionType(this).register();
         new PlayActionAllActionType(this).register();
+        new MessageIteratorActionType().register();
 
         // Commands
         new OctaneEngineCommandBranch(this).registerCommandBranch(this);
