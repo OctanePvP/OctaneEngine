@@ -1,8 +1,8 @@
 package com.octanepvp.splityosis.octaneengine.files.logics;
 
-import dev.splityosis.configsystem.configsystem.ConfigTypeLogic;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
-import dev.splityosis.configsystem.configsystem.logics.ActionsConfigLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.ConfigTypeLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.configsystem.configsystem.logics.ActionsConfigLogic;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class ActionsMapLogic extends ConfigTypeLogic<ActionsMap> {

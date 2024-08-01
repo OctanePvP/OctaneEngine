@@ -1,6 +1,6 @@
 package com.octanepvp.splityosis.octaneengine.menuitems;
 
-import dev.splityosis.menulib.MenuItem;
+import com.octanepvp.splityosis.menulib.MenuItem;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 

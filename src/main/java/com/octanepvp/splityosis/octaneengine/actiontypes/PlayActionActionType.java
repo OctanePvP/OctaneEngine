@@ -1,9 +1,9 @@
 package com.octanepvp.splityosis.octaneengine.actiontypes;
 
 import com.octanepvp.splityosis.octaneengine.OctaneEngine;
-import dev.splityosis.configsystem.configsystem.actionsystem.ActionType;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
-import dev.splityosis.configsystem.configsystem.actionsystem.InvalidActionParameterException;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.ActionType;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.InvalidActionParameterException;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

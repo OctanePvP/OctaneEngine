@@ -1,10 +1,10 @@
 package com.octanepvp.splityosis.octaneengine.commands;
 
 import com.octanepvp.splityosis.octaneengine.OctaneEngine;
-import dev.splityosis.commandsystem.SYSCommand;
-import dev.splityosis.commandsystem.SYSCommandBranch;
-import dev.splityosis.commandsystem.arguments.PlayerArgument;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.commandsystem.SYSCommand;
+import com.octanepvp.splityosis.commandsystem.SYSCommandBranch;
+import com.octanepvp.splityosis.commandsystem.arguments.PlayerArgument;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 

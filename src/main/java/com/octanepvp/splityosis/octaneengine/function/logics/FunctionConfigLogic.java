@@ -3,7 +3,7 @@ package com.octanepvp.splityosis.octaneengine.function.logics;
 import com.octanepvp.splityosis.octaneengine.function.Function;
 import com.octanepvp.splityosis.octaneengine.function.exceptions.InvalidFunctionTypeException;
 import com.octanepvp.splityosis.octaneengine.function.mathfunction.MathFunction;
-import dev.splityosis.configsystem.configsystem.ConfigTypeLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.ConfigTypeLogic;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Arrays;

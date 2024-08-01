@@ -6,7 +6,7 @@
 
     <groupId>com.octanepvp.splityosis</groupId>
     <artifactId>octane-engine</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>OctaneEngine</name>
@@ -47,10 +47,6 @@
                         </goals>
                         <configuration>
                             <relocations>
-                                <relocation>
-                                    <pattern>dev.splityosis</pattern>
-                                    <shadedPattern>com.octanepvp.splityosis</shadedPattern>
-                                </relocation>
                                 <relocation>
                                     <pattern>de.tr7zw</pattern>
                                     <shadedPattern>com.octanepvp</shadedPattern>
@@ -102,31 +98,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.SplitYoSis</groupId>
-            <artifactId>CommandSystem</artifactId>
-            <version>v1.2.6</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.SplitYoSis</groupId>
-            <artifactId>MenuLib</artifactId>
-            <version>1.1.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.SplitYoSis</groupId>
-            <artifactId>ConfigSystem</artifactId>
-            <version>3.0.8</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>de.tr7zw</groupId>
-                    <artifactId>nbtapi</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>de.tr7zw</groupId>
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.12.2</version>
@@ -151,5 +122,39 @@
             <artifactId>exp4j</artifactId>
             <version>0.4.8</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.44.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
     </dependencies>
 </project>

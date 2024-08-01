@@ -1,7 +1,7 @@
 package com.octanepvp.splityosis.octaneengine.menus;
 
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
-import dev.splityosis.menulib.MenuItem;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.menulib.MenuItem;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

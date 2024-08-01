@@ -2,10 +2,10 @@ package com.octanepvp.splityosis.octaneengine.menus.logics;
 
 import com.octanepvp.splityosis.octaneengine.menus.MenuStaticItemsMap;
 import com.octanepvp.splityosis.octaneengine.menus.StaticMenuItem;
-import dev.splityosis.configsystem.configsystem.ConfigTypeLogic;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
-import dev.splityosis.configsystem.configsystem.logics.ActionsConfigLogic;
-import dev.splityosis.configsystem.configsystem.logics.ItemStackConfigLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.ConfigTypeLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.configsystem.configsystem.logics.ActionsConfigLogic;
+import com.octanepvp.splityosis.configsystem.configsystem.logics.ItemStackConfigLogic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 

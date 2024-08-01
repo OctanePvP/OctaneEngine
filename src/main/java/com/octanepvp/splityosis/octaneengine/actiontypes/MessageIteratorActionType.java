@@ -1,6 +1,6 @@
 package com.octanepvp.splityosis.octaneengine.actiontypes;
 
-import dev.splityosis.configsystem.configsystem.actionsystem.ActionType;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.ActionType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

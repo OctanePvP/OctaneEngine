@@ -10,9 +10,9 @@ import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMap;
 import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.function.logics.FunctionConfigLogic;
 import com.octanepvp.splityosis.octaneengine.menus.logics.MenuStaticItemsMapLogic;
-import dev.splityosis.configsystem.configsystem.ConfigSystem;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
-import dev.splityosis.menulib.MenuLib;
+import com.octanepvp.splityosis.configsystem.configsystem.ConfigSystem;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.menulib.MenuLib;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;

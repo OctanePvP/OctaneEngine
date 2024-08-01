@@ -1,11 +1,11 @@
 package com.octanepvp.splityosis.octaneengine.files;
 
 import com.octanepvp.splityosis.octaneengine.files.logics.ActionsMap;
-import dev.splityosis.configsystem.configsystem.AnnotatedConfig;
-import dev.splityosis.configsystem.configsystem.ConfigField;
-import dev.splityosis.configsystem.configsystem.InvalidConfigFileException;
-import dev.splityosis.configsystem.configsystem.actionsystem.ActionData;
-import dev.splityosis.configsystem.configsystem.actionsystem.Actions;
+import com.octanepvp.splityosis.configsystem.configsystem.AnnotatedConfig;
+import com.octanepvp.splityosis.configsystem.configsystem.ConfigField;
+import com.octanepvp.splityosis.configsystem.configsystem.InvalidConfigFileException;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.ActionData;
+import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
 
 import java.io.File;
 import java.util.Arrays;

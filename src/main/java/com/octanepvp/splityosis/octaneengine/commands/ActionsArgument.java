@@ -1,8 +1,8 @@
 package com.octanepvp.splityosis.octaneengine.commands;
 
 import com.octanepvp.splityosis.octaneengine.OctaneEngine;
-import dev.splityosis.commandsystem.SYSArgument;
-import dev.splityosis.commandsystem.SYSCommand;
+import com.octanepvp.splityosis.commandsystem.SYSArgument;
+import com.octanepvp.splityosis.commandsystem.SYSCommand;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

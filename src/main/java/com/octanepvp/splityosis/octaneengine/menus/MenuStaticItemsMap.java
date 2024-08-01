@@ -1,6 +1,6 @@
 package com.octanepvp.splityosis.octaneengine.menus;
 
-import dev.splityosis.menulib.Menu;
+import com.octanepvp.splityosis.menulib.Menu;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
