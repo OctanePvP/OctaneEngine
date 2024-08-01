@@ -6,7 +6,7 @@
 
     <groupId>com.octanepvp.splityosis</groupId>
     <artifactId>octane-engine</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>OctaneEngine</name>
@@ -48,8 +48,8 @@
                         <configuration>
                             <relocations>
                                 <relocation>
-                                    <pattern>de.tr7zw</pattern>
-                                    <shadedPattern>com.octanepvp</shadedPattern>
+                                    <pattern>de.tr7zw.changeme.nbtapi</pattern>
+                                    <shadedPattern>com.octanepvp.nbtapi</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -99,7 +99,7 @@
 
         <dependency>
             <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api-plugin</artifactId>
+            <artifactId>item-nbt-api</artifactId>
             <version>2.12.2</version>
         </dependency>
 

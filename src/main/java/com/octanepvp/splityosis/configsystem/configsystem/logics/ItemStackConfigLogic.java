@@ -1,9 +1,9 @@
 package com.octanepvp.splityosis.configsystem.configsystem.logics;
 
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTCompoundList;
-import de.tr7zw.nbtapi.NBTItem;
-import de.tr7zw.nbtapi.NBTListCompound;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBTCompoundList;
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.NBTListCompound;
 import com.octanepvp.splityosis.configsystem.configsystem.ConfigTypeLogic;
 import org.bukkit.Color;
 import org.bukkit.Material;
