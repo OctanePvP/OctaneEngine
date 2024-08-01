@@ -1,12 +1,12 @@
 package com.octanepvp.splityosis.octaneengine;
 
+import com.octanepvp.splityosis.nucleuscore.Nucleus;
 import com.octanepvp.splityosis.octaneengine.actiontypes.MessageIteratorActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionAllActionType;
 import com.octanepvp.splityosis.octaneengine.commands.OctaneEngineCommandBranch;
 import com.octanepvp.splityosis.octaneengine.files.ActionsBankConfig;
 import com.octanepvp.splityosis.octaneengine.files.logics.ActionsMapLogic;
-import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMap;
 import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.function.logics.FunctionConfigLogic;
 import com.octanepvp.splityosis.octaneengine.menus.logics.MenuStaticItemsMapLogic;
@@ -24,6 +24,7 @@ import java.util.Map;
 public final class OctaneEngine extends JavaPlugin {
 
     private Map<String, Actions> actionsMap = new HashMap<>();
+    private File modulesFolder;
 
     @Override
     public void onEnable() {
@@ -44,6 +45,8 @@ public final class OctaneEngine extends JavaPlugin {
 
         // Commands
         new OctaneEngineCommandBranch(this).registerCommandBranch(this);
+
+        setupNucleus();
 
         reloadPlugin();
     }
@@ -88,6 +91,33 @@ public final class OctaneEngine extends JavaPlugin {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void setupNucleus(){
+        modulesFolder = new File(getDataFolder().getParentFile(), ".OctaneEngineModules");
+        if (!modulesFolder.exists())
+            modulesFolder.mkdirs();
+
+        Nucleus nucleus = new Nucleus(this, "&8[&6OctaneEngine&8]", "&8[&6OctaneEngine - %module%&8]", modulesFolder, new File(getDataFolder(), "database.yml"));
+
+        nucleus.initializeSettings(new File(getDataFolder(), "database-settings.yml"));
+        nucleus.initializeDatabase();
+
+        nucleus.initializeCommandBranch("OctaneEngine", "OctaneEngine", "OEngine");
+
+        File[] childs = modulesFolder.listFiles();
+        if (childs != null)
+            for (File child : childs) {
+                if (child.getName().endsWith(".jar")) {
+                    try {
+                        nucleus.getModuleLoader().loadModules(child, null);
+                    }catch (Exception e){
+                        nucleus.log("&cSomething went wrong with loading the module jarfile "+child.getName());
+                        e.printStackTrace();
+                    }
+                }
+            }
+        nucleus.getModuleLoader().initializeModulesState();
     }
 
     public Map<String, Actions> getActionsMap() {

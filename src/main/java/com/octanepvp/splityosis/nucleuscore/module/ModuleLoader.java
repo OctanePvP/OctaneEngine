@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -30,7 +31,7 @@ public class ModuleLoader {
             modulesFolder.mkdirs();
         modulesMap = new HashMap<>();
         classModuleMap = new HashMap<>();
-        enabledModules = new ArrayList<>();
+        enabledModules = new CopyOnWriteArrayList<>();
     }
 
     /**
@@ -41,7 +42,10 @@ public class ModuleLoader {
     public void loadModules(File jarFile, String packagePath){
         Set<Class<?>> classes = null;
         classes = getClassesInPackage(jarFile, packagePath);
-        nucleus.log("Found "+classes.size() + " classes in package "+packagePath);
+        if (packagePath == null)
+            nucleus.log("Found "+classes.size() + " classes in "+jarFile.getName());
+        else
+            nucleus.log("Found "+classes.size() + " classes in "+jarFile.getName() + " in package "+packagePath);
         if (!classes.isEmpty())
             for (Class<?> aClass : classes) {
                 try {
@@ -61,32 +65,32 @@ public class ModuleLoader {
 
     public void initializeModulesState(){
 //        Bukkit.getScheduler().runTaskLater(nucleus.getPlugin(), () -> {
-            LinkedList<PendingModuleProfile> moduleClassesToLoad = new LinkedList<>();
-            for (Class<? extends Module> aClass : classModuleMap.keySet())
-                moduleClassesToLoad.add(new PendingModuleProfile(aClass));
+        LinkedList<PendingModuleProfile> moduleClassesToLoad = new LinkedList<>();
+        for (Class<? extends Module> aClass : classModuleMap.keySet())
+            moduleClassesToLoad.add(new PendingModuleProfile(aClass));
 
-            Map<String, PendingModuleProfile> modulesByNameMap = new HashMap<>();
-            // Putting modules into the map by name
+        Map<String, PendingModuleProfile> modulesByNameMap = new HashMap<>();
+        // Putting modules into the map by name
+        for (PendingModuleProfile pendingModuleProfile : moduleClassesToLoad) {
+            String name = pendingModuleProfile.getLowerCaseName();
+            if (modulesByNameMap.containsKey(name)){
+                moduleClassesToLoad.remove(pendingModuleProfile);
+                new DuplicateModuleNameException("Module with name '"+name+"' is already loaded.").printStackTrace();
+                continue;
+            }
+            modulesByNameMap.put(name, pendingModuleProfile);
+        }
+
+        if (!moduleClassesToLoad.isEmpty())
+            while(scan(moduleClassesToLoad, modulesByNameMap));
+
+        if (moduleClassesToLoad.size() != 0){
+            // Some classes couldn't be enabled
+            getNucleus().log("&4Modules couldn't enable because of a circular dependency structure:");
             for (PendingModuleProfile pendingModuleProfile : moduleClassesToLoad) {
-                String name = pendingModuleProfile.getLowerCaseName();
-                if (modulesByNameMap.containsKey(name)){
-                    moduleClassesToLoad.remove(pendingModuleProfile);
-                    new DuplicateModuleNameException("Module with name '"+name+"' is already loaded.").printStackTrace();
-                    continue;
-                }
-                modulesByNameMap.put(name, pendingModuleProfile);
+                getNucleus().log(" &c- "+pendingModuleProfile.getSignature().name());
             }
-
-            if (!moduleClassesToLoad.isEmpty())
-                while(scan(moduleClassesToLoad, modulesByNameMap));
-
-            if (moduleClassesToLoad.size() != 0){
-                // Some classes couldn't be enabled
-                getNucleus().log("&4Modules couldn't enable because of a circular dependency structure:");
-                for (PendingModuleProfile pendingModuleProfile : moduleClassesToLoad) {
-                    getNucleus().log(" &c- "+pendingModuleProfile.getSignature().name());
-                }
-            }
+        }
 //        }, 1L);
     }
 
@@ -161,7 +165,6 @@ public class ModuleLoader {
 
 
     public void onDisable(){
-        //TODO @Sllly make it so they disable in the right order
         for (Module enabledModule : new ArrayList<>(enabledModules)) {
             try {
                 disableModule(enabledModule, false);
@@ -368,18 +371,23 @@ public class ModuleLoader {
     }
 
     public static Set<Class<?>> getClassesInPackage(File jarFile, String packageName) {
-        Set<Class<?>> classes = new HashSet<Class<?>>();
+        Set<Class<?>> classes = new HashSet<>();
         try {
             JarFile file = new JarFile(jarFile);
-            for (Enumeration<JarEntry> entry = file.entries(); entry.hasMoreElements();) {
-                JarEntry jarEntry = entry.nextElement();
+            Enumeration<JarEntry> entries = file.entries();
+
+            while (entries.hasMoreElements()) {
+                JarEntry jarEntry = entries.nextElement();
                 String name = jarEntry.getName().replace("/", ".");
-                if(name.startsWith(packageName) && name.endsWith(".class")) {
-                    classes.add(Class.forName(name.substring(0, name.length() - 6)));
+
+                if (name.endsWith(".class")) {
+                    if (packageName == null || name.startsWith(packageName)) {
+                        classes.add(Class.forName(name.substring(0, name.length() - 6)));
+                    }
                 }
             }
             file.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return classes;

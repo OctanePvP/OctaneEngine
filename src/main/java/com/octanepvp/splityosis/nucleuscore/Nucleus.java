@@ -23,6 +23,7 @@ import java.util.List;
 public class Nucleus {
 
     private final String LOG_PREFIX;
+    private final String MODULES_LOGGER_PREFIX;
 
     private ModuleLoader moduleLoader;
     private JavaPlugin plugin;
@@ -34,8 +35,9 @@ public class Nucleus {
     private DatabaseConnectionManager databaseConnectionManager;
 
 
-    public Nucleus(JavaPlugin plugin, String LOG_PREFIX, File modulesFolder, File localDatabaseFile) {
+    public Nucleus(JavaPlugin plugin, String LOG_PREFIX, String MODULES_LOGGER_PREFIX, File modulesFolder, File localDatabaseFile) {
         this.plugin = plugin;
+        this.MODULES_LOGGER_PREFIX = MODULES_LOGGER_PREFIX;
         this.localDatabaseFile = localDatabaseFile;
         moduleLoader = new ModuleLoader(this, modulesFolder);
         this.LOG_PREFIX = LOG_PREFIX;
