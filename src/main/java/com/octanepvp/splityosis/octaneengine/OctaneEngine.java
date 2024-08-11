@@ -46,9 +46,9 @@ public final class OctaneEngine extends JavaPlugin {
         // Commands
         new OctaneEngineCommandBranch(this).registerCommandBranch(this);
 
-        setupNucleus();
-
         reloadPlugin();
+
+        setupNucleus();
     }
 
     @Override

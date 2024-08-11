@@ -52,7 +52,7 @@ public class Actions {
             if (actionType == null)
                 new InvalidActionTypeException(actionData.getActionKey()).printStackTrace();
             else if (actionType instanceof DelayActionType && ConfigSystem.plugin != null){
-                if (actionData.getParameters().size() == 0) continue;
+                if (actionData.getParameters().isEmpty()) continue;
                 int ticks;
                 try {
                     ticks = Integer.parseInt(actionData.getParameters().get(0));
@@ -70,8 +70,13 @@ public class Actions {
                 }.runTaskLater(ConfigSystem.plugin, ticks);
                 return;
             }
-            else
-                actionType.run(player, actionData.getParameters(), placeholders);
+            else {
+                try {
+                    actionType.run(player, actionData.getParameters(), placeholders);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -119,7 +124,11 @@ public class Actions {
             }
             else
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                    actionType.run(onlinePlayer, actionData.getParameters(), placeholders);
+                    try {
+                        actionType.run(onlinePlayer, actionData.getParameters(), placeholders);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
         }
     }
