@@ -26,6 +26,7 @@ public class Actions {
             this.actionDataList = new ArrayList<>();
     }
 
+
     /**
      * Runs all the actions where the target is the given player and sets PlaceholderAPI (if exists) on given player.
      * @param player Target
