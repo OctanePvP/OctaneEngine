@@ -26,6 +26,42 @@ public class ActionBuilder {
         return this;
     }
 
+    public ActionBuilder addAction(List<ActionData> data){
+        actionDataList.addAll(data);
+        return this;
+    }
+
+    public ActionBuilder addAction(ActionData data){
+        actionDataList.add(data);
+        return this;
+    }
+
+    public ActionBuilder addAction(Actions actions){
+        actionDataList.addAll(actions.getActionDataList());
+        return this;
+    }
+
+    public ActionBuilder message(String message){
+        return addAction("MESSAGE", message);
+    }
+
+    public ActionBuilder sound(@NotNull Sound sound){
+        return addAction("SOUND", sound.name());
+    }
+
+    public ActionBuilder title(String... params){
+        return addAction("TITLE", params);
+    }
+
+    public ActionBuilder actionBar(String... params){
+        return addAction("ACTIONBAR", params);
+    }
+
+    public ActionBuilder wait(int ticks){
+        return addAction("WAIT", String.valueOf(ticks));
+    }
+
+
     /**
      * Builds the Actions object with the actions added.
      * @return the Action
