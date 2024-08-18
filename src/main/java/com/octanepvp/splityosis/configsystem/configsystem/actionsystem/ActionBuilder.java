@@ -1,5 +1,10 @@
 package com.octanepvp.splityosis.configsystem.configsystem.actionsystem;
 
+import org.bukkit.Sound;
+import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +34,34 @@ public class ActionBuilder {
         return new Actions(actionDataList);
     }
 
+    /**
+     * Creates a simple action with a message and sound.
+     * @param sound
+     * @param title
+     * @param subtitle
+     * @param msg
+     * @return title Actions
+     */
+    public static Actions simpleTitle(@Nullable Sound sound, @Nullable String title, @Nullable String subtitle, @Nullable String... msg){
+        ActionBuilder builder = new ActionBuilder();
+        if (msg != null){
+            builder.addAction("MESSAGE", msg);
+        }
+        if (sound != null){
+            builder.addAction("SOUND", sound.name());
+        }
+        if (title != null && subtitle != null)
+            builder.addAction("TITLE", title, subtitle, "20", "20", "20");
+        return builder.build();
+    }
 
-
-
+    /**
+     * Creates a simple action with a message.
+     * @param message
+     * @return message Actions
+     */
+    public static Actions simpleMessage(@NotNull String message){
+        return new ActionBuilder().addAction("MESSAGE", message).build();
+    }
 
 }
