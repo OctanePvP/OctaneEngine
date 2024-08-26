@@ -133,8 +133,9 @@ public abstract class AnnotatedConfig {
         }
     }
 
-    public void reload(){
-        config = YamlConfiguration.loadConfiguration(file);
+    public void reload() throws IOException, InvalidConfigurationException {
+        config = new YamlConfiguration();
+        config.load(file);
         updateFields();
     }
 
