@@ -5,15 +5,19 @@ import com.octanepvp.splityosis.octaneengine.actiontypes.MessageIteratorActionTy
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionAllActionType;
 import com.octanepvp.splityosis.octaneengine.commands.OctaneEngineCommandBranch;
+import com.octanepvp.splityosis.octaneengine.data.PlayerLoginData;
 import com.octanepvp.splityosis.octaneengine.files.ActionsBankConfig;
 import com.octanepvp.splityosis.octaneengine.files.logics.ActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.function.logics.FunctionConfigLogic;
+import com.octanepvp.splityosis.octaneengine.listeners.LoginListener;
 import com.octanepvp.splityosis.octaneengine.menus.logics.MenuStaticItemsMapLogic;
 import com.octanepvp.splityosis.configsystem.configsystem.ConfigSystem;
 import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
 import com.octanepvp.splityosis.menulib.MenuLib;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,13 +25,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class OctaneEngine extends JavaPlugin {
+public final class
+OctaneEngine extends JavaPlugin {
 
     private Map<String, Actions> actionsMap = new HashMap<>();
     private File modulesFolder;
+    private static OctaneEngine instance;
+    private PlayerLoginData loginData;
+    private BukkitAudiences adventure;
+
 
     @Override
     public void onEnable() {
+
+        instance = this;
+        this.adventure = BukkitAudiences.create(this);
 
         MenuLib.setup(this);
         ConfigSystem.setup(this);
@@ -46,6 +58,12 @@ public final class OctaneEngine extends JavaPlugin {
         // Commands
         new OctaneEngineCommandBranch(this).registerCommandBranch(this);
 
+        // Listeners
+        getServer().getPluginManager().registerEvents(new LoginListener(), this);
+
+        //
+        this.loginData = new PlayerLoginData();
+
         reloadPlugin();
 
         setupNucleus();
@@ -53,10 +71,14 @@ public final class OctaneEngine extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
     public void reloadPlugin(){
+        this.loginData.reload();
         reloadActions();
     }
 
@@ -120,6 +142,13 @@ public final class OctaneEngine extends JavaPlugin {
         nucleus.getModuleLoader().initializeModulesState();
     }
 
+    public @NonNull BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
+
     public Map<String, Actions> getActionsMap() {
         return actionsMap;
     }
@@ -131,4 +160,9 @@ public final class OctaneEngine extends JavaPlugin {
     public Collection<Actions> getActions(){
         return new ArrayList<>(actionsMap.values());
     }
+
+    public static OctaneEngine getInstance() {
+        return instance;
+    }
+
 }
