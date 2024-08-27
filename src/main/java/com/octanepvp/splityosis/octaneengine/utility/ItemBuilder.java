@@ -3,6 +3,7 @@ package com.octanepvp.splityosis.octaneengine.utility;
 import com.octanepvp.splityosis.octaneengine.OctaneEngine;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -62,6 +63,15 @@ public class ItemBuilder {
 
     public ItemBuilder material(Material material) {
         itemStack.setType(material);
+        return this;
+    }
+
+    public ItemBuilder material(String material) {
+        if(!EnumUtils.isValidEnum(Material.class, material.toUpperCase())){
+            meta.setDisplayName("Invalid Material provided in builder");
+        } else {
+            itemStack.setType(Material.getMaterial(material.toUpperCase()));
+        }
         return this;
     }
 
