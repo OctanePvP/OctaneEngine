@@ -13,6 +13,11 @@ public class LogUtil {
     private final Logger logger;
 
 
+    /**
+     * Constructor for LogUtil
+     * Construct onEnable() in your main class and use throughout plugin
+     * @param plugin
+     */
     public LogUtil(JavaPlugin plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();

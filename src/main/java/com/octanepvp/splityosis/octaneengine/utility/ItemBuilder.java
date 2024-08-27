@@ -27,8 +27,23 @@ public class ItemBuilder {
     }
 
     /**
+     * Convert an ItemStack to an ItemBuilder for further manipulation
+     * @param itemStack to build from
+     * @return ItemBuilder from ItemStack
+     */
+    public static ItemBuilder toBuilder(ItemStack itemStack) {
+        return new ItemBuilder().itemStack(itemStack);
+    }
+
+    private ItemBuilder itemStack(ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.meta = itemStack.getItemMeta();
+        return this;
+    }
+
+    /**
      * Builds the ItemStack from the ItemBuilder builder
-     * @return
+     * @return ItemStack
      */
     public ItemStack build(){
         itemStack.setItemMeta(meta);

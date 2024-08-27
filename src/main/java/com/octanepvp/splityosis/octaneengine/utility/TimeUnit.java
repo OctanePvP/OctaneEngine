@@ -21,6 +21,13 @@ public enum TimeUnit {
     private static final int TICKS_PER_DAY = TICKS_PER_HOUR * 24;
 
 
+    /**
+     * @usage TimeUnit.DAYS.toSeconds(1); returns the number of seconds in a day
+     * @usage TimeUnit.SECONDS.toTicks(2); returns the number of ticks in 2 seconds
+     * @param duration
+     * @return
+     */
+
     public long toDays(long duration) {
         return javaTimeUnit != null ? javaTimeUnit.toDays(duration) : (duration / TICKS_PER_DAY);
     }
