@@ -5,7 +5,6 @@ import com.octanepvp.splityosis.octaneengine.actiontypes.MessageIteratorActionTy
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionActionType;
 import com.octanepvp.splityosis.octaneengine.actiontypes.PlayActionAllActionType;
 import com.octanepvp.splityosis.octaneengine.commands.OctaneEngineCommandBranch;
-import com.octanepvp.splityosis.octaneengine.data.PlayerLoginData;
 import com.octanepvp.splityosis.octaneengine.files.ActionsBankConfig;
 import com.octanepvp.splityosis.octaneengine.files.logics.ActionsMapLogic;
 import com.octanepvp.splityosis.octaneengine.files.logics.IntegerActionsMapLogic;
@@ -15,10 +14,8 @@ import com.octanepvp.splityosis.octaneengine.menus.logics.MenuStaticItemsMapLogi
 import com.octanepvp.splityosis.configsystem.configsystem.ConfigSystem;
 import com.octanepvp.splityosis.configsystem.configsystem.actionsystem.Actions;
 import com.octanepvp.splityosis.menulib.MenuLib;
-import com.octanepvp.splityosis.octaneengine.utility.ItemBuilder;
+import com.octanepvp.splityosis.octaneengine.oplayer.PlayerDataHandler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -28,14 +25,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class
-OctaneEngine extends JavaPlugin {
+public final class OctaneEngine extends JavaPlugin {
 
     private Map<String, Actions> actionsMap = new HashMap<>();
     private File modulesFolder;
     private static OctaneEngine instance;
-    private PlayerLoginData loginData;
     private BukkitAudiences adventure;
+    private File engineDataFolder;
+    private PlayerDataHandler playerDataHandler;
 
 
     @Override
@@ -43,6 +40,12 @@ OctaneEngine extends JavaPlugin {
 
         instance = this;
         this.adventure = BukkitAudiences.create(this);
+
+        engineDataFolder = new File(getDataFolder(), "engine-data");
+        if (!engineDataFolder.exists())
+            engineDataFolder.mkdirs();
+
+        setupOPlayerEnvironment();
 
         MenuLib.setup(this);
         ConfigSystem.setup(this);
@@ -64,13 +67,9 @@ OctaneEngine extends JavaPlugin {
         // Listeners
         getServer().getPluginManager().registerEvents(new LoginListener(), this);
 
-        //
-        this.loginData = new PlayerLoginData();
-
         reloadPlugin();
 
         setupNucleus();
-
     }
 
     @Override
@@ -79,18 +78,19 @@ OctaneEngine extends JavaPlugin {
             this.adventure.close();
             this.adventure = null;
         }
+
+        getPlayerDataHandler().getDataFile().stopAutoSave();
+        getPlayerDataHandler().getDataFile().save();
     }
 
     public void reloadPlugin(){
-        this.loginData.reload();
+        if (!getDataFolder().exists())
+            getDataFolder().mkdirs();
         reloadActions();
     }
 
     public void reloadActions(){
         actionsMap.clear();
-
-        if (!getDataFolder().exists())
-            getDataFolder().mkdirs();
 
         File dir = new File(getDataFolder(), "action-bank");
         if (!dir.exists())
@@ -153,6 +153,10 @@ OctaneEngine extends JavaPlugin {
         return this.adventure;
     }
 
+    private void setupOPlayerEnvironment() {
+        playerDataHandler = PlayerDataHandler.setup(this);
+    }
+
     public Map<String, Actions> getActionsMap() {
         return actionsMap;
     }
@@ -169,4 +173,11 @@ OctaneEngine extends JavaPlugin {
         return instance;
     }
 
+    public File getEngineDataFolder() {
+        return engineDataFolder;
+    }
+
+    public PlayerDataHandler getPlayerDataHandler() {
+        return playerDataHandler;
+    }
 }

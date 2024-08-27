@@ -1,7 +1,5 @@
 package com.octanepvp.splityosis.octaneengine.data;
 
-import com.octanepvp.splityosis.octaneengine.OctaneEngine;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,18 +10,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public abstract class DataFile {
+public class DataFile {
 
-    private final JavaPlugin plugin;
     private final File file;
     private final FileConfiguration config;
     private double autoSaveCode = 0;
-    private long autoSaveDelay;
 
-    public DataFile(File file, JavaPlugin plugin, long autoSaveDelay) {
-        this.plugin = plugin;
+    public DataFile(File file) {
         this.file = file;
-        this.autoSaveDelay = autoSaveDelay;
         try {
             if (!file.exists())
                 file.createNewFile();
@@ -32,12 +26,6 @@ public abstract class DataFile {
         } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
-
-        // Start autosave after a specific interval to prevent saving at same time
-        Random random = new Random();
-        int saveOffset = random.nextInt(61);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(OctaneEngine.getInstance(), this::startAutoSave, saveOffset * 20);
-        startAutoSave();
     }
 
     public void save(){
@@ -48,7 +36,11 @@ public abstract class DataFile {
         }
     }
 
-    public void startAutoSave(){
+    public void startAutoSave(JavaPlugin plugin, long delay){
+        // Start autosave after a specific interval to minimize instances saving at the same time
+        Random random = new Random();
+        long saveOffset = random.nextLong(delay);
+
         if (isAutoSave())
             return;
         autoSaveCode = Math.random();
@@ -62,7 +54,7 @@ public abstract class DataFile {
                 }
                 save();
             }
-        }.runTaskTimerAsynchronously(plugin, 0, autoSaveDelay);
+        }.runTaskTimerAsynchronously(plugin, saveOffset, delay);
     }
 
     public void stopAutoSave(){
@@ -77,9 +69,6 @@ public abstract class DataFile {
         return config;
     }
 
-    public JavaPlugin getPlugin() {
-        return plugin;
-    }
 
     public void reload(){
         try {
@@ -87,9 +76,5 @@ public abstract class DataFile {
         } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void setAutoSaveDelay(long autoSaveDelay) {
-        this.autoSaveDelay = autoSaveDelay;
     }
 }
