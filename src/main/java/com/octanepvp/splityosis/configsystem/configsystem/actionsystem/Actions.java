@@ -26,6 +26,23 @@ public class Actions {
             this.actionDataList = new ArrayList<>();
     }
 
+    /**
+     * Parses the given list of strings into an Actions object.
+     * @param rawInput List of strings to be parsed
+     * @return Actions object
+     */
+
+    public static Actions parseActions(List<String> rawInput){
+        List<ActionData> actionDataList = new ArrayList<>();
+        for (String s : rawInput)
+            try {
+                actionDataList.add(ActionData.parseString(s));
+            }catch (Exception e){
+                new ActionsFormatParseException(s).printStackTrace();
+            }
+        return new Actions(actionDataList);
+    }
+
 
     /**
      * Runs all the actions where the target is the given player and sets PlaceholderAPI (if exists) on given player.

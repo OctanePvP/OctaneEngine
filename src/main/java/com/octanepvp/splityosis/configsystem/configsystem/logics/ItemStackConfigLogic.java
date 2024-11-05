@@ -1,5 +1,6 @@
 package com.octanepvp.splityosis.configsystem.configsystem.logics;
 
+import com.octanepvp.splityosis.octaneengine.OctaneEngine;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTCompoundList;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -140,7 +141,11 @@ public class ItemStackConfigLogic extends ConfigTypeLogic<ItemStack> {
 
     public static String getBase64(ItemStack itemStack){
         NBTItem nbtItem = new NBTItem(itemStack);
-        NBTCompound skull = nbtItem.getCompound("SkullOwner");
+        NBTCompound skull = null;
+        try {
+            skull = nbtItem.getCompound("SkullOwner");
+        }catch (Exception ignored){
+        }
         if (skull == null) return null;
         NBTCompound properties = skull.addCompound("Properties");
         if (properties == null)
